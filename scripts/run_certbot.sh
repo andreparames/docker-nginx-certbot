@@ -18,6 +18,12 @@ for domain in $(parse_domains); do
         exit_code=1
     fi
 done
+for domain in $(parse_wildcard_domains); do
+    if ! get_wildcard_certificate $domain $CERTBOT_EMAIL; then
+        error "Cerbot failed for $domain. Check the logs for details."
+        exit_code=1
+    fi
+done
 
 # After trying to get all our certificates, auto enable any configs that we
 # did indeed get certificates for
